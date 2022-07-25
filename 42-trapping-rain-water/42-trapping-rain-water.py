@@ -3,21 +3,17 @@ class Solution:
         
         left, right = 0, len(height)-1
         water = 0
-        max_height = height.index(max(height))
-        max_left, max_right = 0, 0
+        max_left, max_right = height[left], height[right]
         
+        # 더 높은 쪽으로 포인터 이동
         while (left < right):
-            if left < max_height:
-                max_left = max(height[left], max_left)
-                if (height[left+1] < max_left):
-                    water += (max_left-height[left+1])
+            max_left, max_right = max(height[left], max_left), max(height[right], max_right)
+            if max_left <= max_right:
+                water += (max_left - height[left])
                 left += 1
-            
-            if right > max_height:
-                max_right = max(height[right], max_right)
-                if (height[right-1] < max_right):
-                    water += (max_right-height[right-1])
-                right -= 1
+            else:
+                water += (max_right - height[right])
+                right -=1
             
         return water
             
