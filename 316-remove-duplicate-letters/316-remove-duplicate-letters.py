@@ -2,7 +2,6 @@ from collections import Counter
 class Solution:
     def removeDuplicateLetters(self, s: str) -> str:
         counter = Counter(s)
-        answer = ''
         stack = []
         for key in s:
             counter[key] -= 1
