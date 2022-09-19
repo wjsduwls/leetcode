@@ -1,0 +1,24 @@
+# phone_num dictionary 생성
+from collections import defaultdict
+phone_num = defaultdict(list)
+range_i = range(2,7)
+range_j = range(65,80,3)
+for i,j in zip(range_i, range_j):
+    phone_num[i].extend([chr(j),chr(j+1),chr(j+2)])
+phone_num[7] = ['P','Q','R','S']
+phone_num[8] = ['T','U','V']
+phone_num[9] = ['W','X','Y','Z']
+
+# product로 답안 생성
+from itertools import product
+input_num = '23'
+temp_ls = []
+for num in input_num:
+    temp_ls.append(phone_num[int(num)])
+answer = []
+for ls in list(product(*temp_ls)):
+    temp = ''
+    for char in ls:
+        temp += char.lower()
+    answer.append(temp)
+print(answer)
