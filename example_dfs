@@ -1,0 +1,74 @@
+# example 1
+graph = [[1, 1, 1, 1, 0, 0],
+         [1, 1, 0, 0, 0, 0],
+         [1, 0, 1, 0, 0, 1],
+         [1, 0, 0, 1, 1, 0],
+         [0, 0, 0, 1, 1, 0],
+         [0, 0, 1, 0, 0, 1]]
+visited = [0]*len(graph)
+
+answer, input_start = [], 0
+stack = [input_start]
+while stack:
+    print("\nstack:", stack)
+    temp = stack.pop()
+    print("\pop된 노드:", temp)
+    visited[temp] = 1
+    answer.append(temp)
+    
+    for i in range(len(graph[temp])):
+        if graph[temp][i] == 1 and visited[i] == 0 and temp!=i:
+            stack.append(i)
+    print(answer)
+    
+# example 2
+import copy
+def dfs_iterative(graph, start):
+    answer, start = [], 0
+    stack = [start]
+    path = []
+    visited = [False]*len(graph)
+    while stack:
+        print("\n")
+        print("stack:", stack)
+        start = stack.pop()
+        print(start, "방문")
+        visited[start] = True
+        path.append(start)
+        print("path:", path)
+    
+        cands = []
+        for i in range(len(graph[start])-1, -1, -1):
+            if not visited[i] and graph[start][i] == 1:
+                cands.append(i)
+    
+        print("인접한 노드:", cands)
+        if cands:
+            stack.extend(cands)
+    
+        else:
+            print("끝자락 도착")
+            answer.append(copy.deepcopy(path))
+        
+            while True and path:
+                print("빠진 노드:", path.pop())
+                try:
+                    temp = path[-1]
+                except:
+                    return answer
+            
+                arr = []
+                for i in range(len(graph[temp])-1, -1, -1):
+                    if graph[temp][i] == 1 and not visited[i]:
+                        arr.append(i)
+                print(arr)
+                
+                if arr:
+                    print("이제 그만 뺌")
+                    break
+                else:
+                    print("아직 pop해야함")
+                    print("빠진 path:", path)
+    print("\nanswer:", answer)
+    return answer
+    dfs_iterative(graph, start)
